@@ -1,0 +1,17 @@
+{
+    "name": "xxh/php_frame",
+    "authors": [
+        {
+            "name": "xxh",
+            "email": "449399575@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "psr/http-message": "^1.0"
+    }
+}
