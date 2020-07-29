@@ -14,9 +14,7 @@ class App {
 
     public static function getApp()
     {
-        if( self::$instance)
-        return self::$instance;
-        return self::$instance = new self();
+        return self::$instance ? : self::$instance = new self();
     }
 
     public function get($name)
@@ -44,11 +42,23 @@ class App {
 
     protected function boot()
     {
-//        self::get('route')->group([
-//            'namespace' => 'App\\Controller'
-//        ],function ($router){
-//            return FRAME_BASE_PATH.'/routes.php';
-//        });
+
+        //web router
+        self::get('route')->group([
+            'namespace' => 'App\\Controller'
+        ],function ($router){
+            //var_dump($router);exit;
+            require_once FRAME_BASE_PATH . 'routes/web.php';
+        });
+
+
+        //api router
+        self::get('route')->group([
+            'namespace' => 'App\\Controller\\Api',
+            'prefix' => 'api'
+        ],function ($router){
+            require_once FRAME_BASE_PATH . 'routes/api.php';
+        });
     }
 
 }

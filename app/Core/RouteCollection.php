@@ -15,10 +15,14 @@ Class RouteCollection
         return $this->routes;
     }
 
-    public function group($options = [])
+    public $currGroup = [];
+    public function group($attributes = [],\Closure $callback)
     {
 
-        return $this;
+        $this->currGroup[] = $attributes;
+        $callback($this);
+//        call_user_func($callback,$this);
+        array_pop($this->currGroup);
     }
 
 
@@ -33,6 +37,7 @@ Class RouteCollection
               'uses' => $uses
           ]
         ];
+
     }
 
 
