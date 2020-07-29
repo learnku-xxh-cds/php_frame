@@ -9,7 +9,10 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "require": {
         "psr/http-message": "^1.0"

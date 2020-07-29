@@ -3,7 +3,15 @@
 
 define('FRAME_BASE_PATH',__DIR__.'/../');
 require FRAME_BASE_PATH.'/vendor/autoload.php';
-$app = require FRAME_BASE_PATH.'/app.php';
 
-echo $app->get('request')->getMethod();
+require FRAME_BASE_PATH.'/app.php';
+
+
+
+//App::getApp()->get('request')->getMethod()
+App::getApp()->get('response')->setContent(
+    'hello'
+)->withHeader('token','123456')->send();
+
+
 
