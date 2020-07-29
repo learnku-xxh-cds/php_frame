@@ -19,7 +19,7 @@ class App {
 
     public function get($name)
     {
-        return $this->binds[$name]();
+        return $this->bind[$name]['instance'] ? : $this->bind[$name]['instance'] = $this->binds[$name]();
     }
 
     public function bind($name,$concrete)
@@ -55,7 +55,7 @@ class App {
         //api router
         self::get('route')->group([
             'namespace' => 'App\\Controller\\Api',
-            'prefix' => 'api'
+            'prefix' => 'api/'
         ],function ($router){
             require_once FRAME_BASE_PATH . 'routes/api.php';
         });

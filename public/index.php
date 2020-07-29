@@ -6,14 +6,12 @@ require FRAME_BASE_PATH.'/vendor/autoload.php';
 
 require FRAME_BASE_PATH.'/app.php';
 
-
-
 // App::getApp()->get('request')->getMethod();
 App::getApp()->get('response')->setContent(
     'hello'
 )->withHeader('token','123456')->send();
 
-App::getApp()->get('route');
-
-$r = App::getApp()->get('route')->getRoutes();
-var_dump($r);
+echo "<pre>";
+var_dump(
+    App::getApp()->get('route')->getRoutes()
+);

@@ -28,7 +28,17 @@ Class RouteCollection
 
     public function addRoute($method,$uri,$uses)
     {
+
+        $prefix = '';
+        $middleware = [];
+        foreach ($this->currGroup as $group){
+            $prefix .= $group['prefix'] ?? '';
+            if( isset($group['middleware']))
+            $middleware[] = $group['middleware'];
+        }
+
         $method = strtoupper($method);
+            $uri .= $prefix .$uri;
         $this->route_index = $method . $uri;
         $this->routes[$this->route_index] = [
           'method' => $method,
