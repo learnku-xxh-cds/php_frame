@@ -57,7 +57,6 @@ Class RouteCollection
               'uses' => $uses
           ]
         ];
-
     }
 
 

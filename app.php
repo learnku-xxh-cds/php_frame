@@ -44,6 +44,9 @@ class App {
         $this->bind('pipeline', function (){
             return new \core\PipleLine();
         });
+        $this->bind('config', function (){
+            return new \core\Config();
+        });
     }
 
     protected function boot()
@@ -65,6 +68,7 @@ class App {
         ],function ($router){
             require_once FRAME_BASE_PATH . 'routes/api.php';
         });
+        self::get('config')->init();
     }
 
 }
