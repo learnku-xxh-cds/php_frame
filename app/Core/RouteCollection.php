@@ -4,6 +4,8 @@
 namespace App\Core;
 
 
+use Cassandra\Varint;
+
 Class RouteCollection
 {
 
@@ -25,20 +27,29 @@ Class RouteCollection
         array_pop($this->currGroup);
     }
 
+    protected function addSlash(& $uri)
+    {
+        return $uri[0] == '/' ? : $uri = '/'.$uri;
+    }
 
     public function addRoute($method,$uri,$uses)
     {
 
         $prefix = '';
         $middleware = [];
+        $this->addSlash($uri);
         foreach ($this->currGroup as $group){
-            $prefix .= $group['prefix'] ?? '';
+            $prefix .= $group['prefix'] ?? false;
+            if( $prefix)
+              $this->addSlash($prefix);
+
             if( isset($group['middleware']))
-            $middleware[] = $group['middleware'];
+              $middleware[] = $group['middleware'];
         }
 
         $method = strtoupper($method);
-            $uri .= $prefix .$uri;
+        $uri = $prefix .$uri;
+
         $this->route_index = $method . $uri;
         $this->routes[$this->route_index] = [
           'method' => $method,
@@ -68,17 +79,19 @@ Class RouteCollection
         return $this->getRoutes()[$this->route_index] ?? false;
     }
 
-    public function dispatch(Request $request)
+    public function dispatch($request)
     {
+
         $method = $request->getMethod();
         $uri = $request->getUri();
         $this->route_index = $method . $uri;
         $route = $this->getCurrRoute();
-        if( $route)
+
+        if(! $route)
         return 404;
 
-        if( $route instanceof \Closure)
-        return $route['uses']();
+        if( $route['action']['uses'] instanceof \Closure)
+        return $route['action']['uses']();
 
         $uses = explode('@',$route['uses']);
         return (new $uses[0])->$uses[1];

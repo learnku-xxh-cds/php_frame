@@ -55,7 +55,7 @@ class App {
         //api router
         self::get('route')->group([
             'namespace' => 'App\\Controller\\Api',
-            'prefix' => 'api/'
+            'prefix' => 'api'
         ],function ($router){
             require_once FRAME_BASE_PATH . 'routes/api.php';
         });

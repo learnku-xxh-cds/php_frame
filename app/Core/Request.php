@@ -87,6 +87,8 @@ class Request implements RequestInterface
 
     public function getUri()
     {
+
+        return $_SERVER['PATH_INFO'];
         // TODO: Implement getUri() method.
     }
 
