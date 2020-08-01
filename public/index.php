@@ -15,25 +15,11 @@ define('IS_WIN', strpos(PHP_OS, 'WIN') !== false);
 
 //加载函数库
 $file = FRAME_BASE_PATH . 'vendor/autoload.php';
-if (file_exists($file)) {
+if ( file_exists($file)) {
     require $file;
 } else {
     die("include composer autoload.php fail");
 }
-
-spl_autoload_register(function ($class) {
-    if (strpos($class, 'core\\') === 0) {
-        $name = substr($class, strlen('core'));
-        $classPath = FRAME_BASE_PATH . "core" . strtr($name, '\\', DIRECTORY_SEPARATOR) . '.php';
-        if (file_exists($classPath)) {
-            include $classPath;
-            return true;
-        } else {
-            return false;
-        }
-    }
-});
-
 
 if (file_exists(FRAME_BASE_PATH . 'app.php')) {
     $app = require FRAME_BASE_PATH . 'app.php';
@@ -47,6 +33,6 @@ if (file_exists(FRAME_BASE_PATH . 'app.php')) {
 
 //启动框架
 //App::getApp()->get('request')->getMethod()
-//App::getApp()->get('response')->setContent(
-//    'hello'
-//)->withHeader('token','123456')->send();
+App::getApp()->get('response')->setContent(
+    'hello'
+)->withHeader('token','123456')->send();

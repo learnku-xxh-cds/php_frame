@@ -30,13 +30,13 @@ class App {
     protected function register()
     {
         $this->bind('request', function (){
-           return new \App\Core\Request();
+           return new \core\Request();
         });
         $this->bind('response', function (){
-            return new \App\Core\Response();
+            return new \core\Response();
         });
         $this->bind('route', function (){
-            return new \App\Core\RouteCollection();
+            return new \core\RouteCollection();
         });
     }
 

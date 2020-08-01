@@ -1,10 +1,7 @@
 <?php
 
+namespace core;
 
-namespace App\Core;
-
-
-use Cassandra\Varint;
 
 Class RouteCollection
 {
