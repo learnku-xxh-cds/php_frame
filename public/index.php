@@ -31,6 +31,7 @@ echo App::getApp()->get('route')->dispatch(
     App::getApp()->get('request')
 );
 
+
 var_dump(
     App::getApp()->get('config')->get('database.connections')
 );
