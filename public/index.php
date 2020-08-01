@@ -27,9 +27,6 @@ require_once $composer_auto_load_file;
 require_once $app_file;
 
 //echo $app->get('request')->getMethod();
-
-//启动框架
-//App::getApp()->get('request')->getMethod()
-App::getApp()->get('response')->setContent(
-    'hello'
-)->withHeader('token','123456')->send();
+echo App::getApp()->get('route')->dispatch(
+    App::getApp()->get('request')
+);

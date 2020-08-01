@@ -3,7 +3,7 @@
 
 $router->get('/',function (){
     return "web:hello world";
-});
+})->middleware(\core\middleware\IsAuthLoginMIddleware::class);
 
 
 $router->group([

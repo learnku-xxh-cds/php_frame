@@ -2,7 +2,7 @@
 
 class App {
 
-    public $binds = [];
+    protected $binds = [];
 
     private static $instance;
 
@@ -19,12 +19,15 @@ class App {
 
     public function get($name)
     {
-        return $this->bind[$name]['instance'] ? : $this->bind[$name]['instance'] = $this->binds[$name]();
+        if( isset($this->binds[$name]['instance']))
+            return $this->binds[$name]['instance'];
+
+        return $this->binds[$name]['instance'] = $this->binds[$name]['concrete']();
     }
 
     public function bind($name,$concrete)
     {
-        $this->binds[$name] = $concrete;
+        $this->binds[$name]['concrete'] = $concrete;
     }
 
     protected function register()
@@ -37,6 +40,9 @@ class App {
         });
         $this->bind('route', function (){
             return new \core\RouteCollection();
+        });
+        $this->bind('pipeline', function (){
+            return new \core\PipleLine();
         });
     }
 

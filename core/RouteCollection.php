@@ -3,6 +3,8 @@
 namespace core;
 
 
+use Cassandra\Varint;
+
 Class RouteCollection
 {
 
@@ -82,16 +84,28 @@ Class RouteCollection
         $method = $request->getMethod();
         $uri = $request->getUri();
         $this->route_index = $method . $uri;
-        $route = $this->getCurrRoute();
 
+        $route = $this->getCurrRoute();
         if(! $route)
         return 404;
 
-        if( $route['action']['uses'] instanceof \Closure)
-        return $route['action']['uses']();
 
-        $uses = explode('@',$route['uses']);
-        return (new $uses[0])->$uses[1];
+        $middlewares = $route['action']['middleware'];
+
+        if( $route['action']['uses'] instanceof \Closure){
+            $routerDispatch = $route['action']['uses'];
+        } else{
+            $routerDispatch = function ($route) {
+                $uses = explode('@',$route['uses']);
+                (new $uses[0])->$uses[1];
+            };
+        }
+
+        return \App::getApp()->get('pipeline')->create()->setClass(
+            $middlewares
+        )->run($routerDispatch)(
+            \App::getApp()->get('request')
+        );
     }
 
 
