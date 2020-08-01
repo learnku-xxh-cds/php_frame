@@ -14,20 +14,17 @@ define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
 define('IS_WIN', strpos(PHP_OS, 'WIN') !== false);
 
 //加载函数库
-$file = FRAME_BASE_PATH . 'vendor/autoload.php';
-if ( file_exists($file)) {
-    require $file;
-} else {
-    die("include composer autoload.php fail");
-}
+$composer_auto_load_file = FRAME_BASE_PATH . 'vendor/autoload.php';
+$app_file = FRAME_BASE_PATH . 'app.php';
 
-if (file_exists(FRAME_BASE_PATH . 'app.php')) {
-    $app = require FRAME_BASE_PATH . 'app.php';
-} else {
-    die("include frame app.php fail");
-}
+if (! file_exists( $composer_auto_load_file))
+    die("please exec composer install");
 
+if (! file_exists( $app_file))
+    die("app.php not found");
 
+require_once $composer_auto_load_file;
+require_once $app_file;
 
 //echo $app->get('request')->getMethod();
 
