@@ -1,7 +1,6 @@
 <?php
 
-namespace core;
-
+namespace core\database\connection;
 
 namespace Illuminate\Database;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace core\database;
+namespace core\database\connection;
 
 use Closure;
 use Illuminate\Database\ConnectionInterface;

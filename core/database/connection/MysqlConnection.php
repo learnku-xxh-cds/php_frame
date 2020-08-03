@@ -1,7 +1,7 @@
 <?php
 
 
-namespace core\database;
+namespace core\database\connection;
 
 class MysqlConnection extends Connection
 {

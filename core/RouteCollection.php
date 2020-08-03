@@ -78,15 +78,12 @@ Class RouteCollection
     {
         $routes = $this->getRoutes();
         $route_index = $this->route_index;
-        $str_count = strlen($this->route_index);
+        // $str_count = strlen($this->route_index);
 
         if( isset( $routes[ $route_index]))
             return  $routes[ $route_index];
 
-        if( $route_index[$route_index] == '/')
-            $route_index = substr($route_index,0,$str_count - 1);
-        else
-            $route_index .= '/';
+        $route_index .= '/';
 
         if( isset( $routes[ $route_index]))
           return  $routes[ $route_index];
