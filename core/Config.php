@@ -20,9 +20,8 @@ class Config
     {
 
         $keys = explode('.',$key);
-        $config = null;
-
         $config = $this->config;
+
         foreach ($keys as $key)
           $config = $config[$key];
 

@@ -89,7 +89,7 @@ Class RouteCollection
         return 404;
 
 
-        $middlewares = $route['action']['middleware'];
+        $middlewares = $route['action']['middleware'] ?? [];
 
         if( $route['action']['uses'] instanceof \Closure){
             $routerDispatch = $route['action']['uses'];
@@ -99,6 +99,7 @@ Class RouteCollection
                 (new $uses[0])->$uses[1];
             };
         }
+
 
         return \App::getApp()->get('pipeline')->create()->setClass(
             $middlewares
