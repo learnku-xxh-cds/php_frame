@@ -31,6 +31,7 @@ Class RouteCollection
         return $uri[0] == '/' ? : $uri = '/'.$uri;
     }
 
+
     public function addRoute($method,$uri,$uses)
     {
 
@@ -42,14 +43,15 @@ Class RouteCollection
             if( $prefix)
               $this->addSlash($prefix);
 
+
             if( isset($group['middleware']))
               $middleware[] = $group['middleware'];
         }
 
         $method = strtoupper($method);
         $uri = $prefix .$uri;
-
         $this->route_index = $method . $uri;
+
         $this->routes[$this->route_index] = [
           'method' => $method,
           'uri' => $uri,
@@ -74,7 +76,21 @@ Class RouteCollection
 
     public function getCurrRoute()
     {
-        return $this->getRoutes()[$this->route_index] ?? false;
+        $routes = $this->getRoutes();
+        $route_index = $this->route_index;
+        $str_count = strlen($this->route_index);
+
+        if( isset( $routes[ $route_index]))
+            return  $routes[ $route_index];
+
+        if( $route_index[$route_index] == '/')
+            $route_index = substr($route_index,0,$str_count - 1);
+        else
+            $route_index .= '/';
+
+        if( isset( $routes[ $route_index]))
+          return  $routes[ $route_index];
+        return  false;
     }
 
     public function dispatch($request)
@@ -88,7 +104,6 @@ Class RouteCollection
         if(! $route)
         return 404;
 
-
         $middlewares = $route['action']['middleware'] ?? [];
 
         if( $route['action']['uses'] instanceof \Closure){
@@ -99,7 +114,6 @@ Class RouteCollection
                 (new $uses[0])->$uses[1];
             };
         }
-
 
         return \App::getApp()->get('pipeline')->create()->setClass(
             $middlewares
