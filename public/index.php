@@ -26,13 +26,10 @@ if (! file_exists( $app_file))
 require_once $composer_auto_load_file;
 require_once $app_file;
 
-//echo $app->get('request')->getMethod();
-echo App::getApp()->get('route')->dispatch(
-    App::getApp()->get('request')
-);
+App::getApp()->get('response')->setContent(
+    App::getApp()->get('route')->dispatch(
+       App::getApp()->get('request')
+    )
+)->send();
 
-
-var_dump(
-    App::getApp()->get('config')->get('database.connections')
-);
 

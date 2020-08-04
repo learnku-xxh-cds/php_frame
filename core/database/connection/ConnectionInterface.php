@@ -1,6 +1,7 @@
 <?php
 
-namespace core\database\connection;
+namespace core\database;
+
 
 namespace Illuminate\Database;
 
@@ -8,7 +9,7 @@ namespace Illuminate\Database;
 interface ConnectionInterface
 {
 
-    public function table($table, $as = null);
+
 
     public function select($query, $bindings = [], $useReadPdo = true);
 

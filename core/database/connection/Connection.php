@@ -11,13 +11,6 @@ class Connection implements ConnectionInterface
 {
 
 
-    protected $table;
-
-    public function table($table, $as = null)
-    {
-        $this->table = $table;
-        return $this;
-    }
 
     public function raw($value)
     {

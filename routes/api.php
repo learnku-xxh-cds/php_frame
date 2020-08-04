@@ -1,5 +1,6 @@
 <?php
 
+// visit /api/
 $router->get('/',function (){
     return "api:hello world";
 });

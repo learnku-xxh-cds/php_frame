@@ -101,19 +101,15 @@ Class RouteCollection
         if(! $route)
         return 404;
 
-        $middlewares = $route['action']['middleware'] ?? [];
-
-        if( $route['action']['uses'] instanceof \Closure){
-            $routerDispatch = $route['action']['uses'];
-        } else{
-            $routerDispatch = function ($route) {
-                $uses = explode('@',$route['uses']);
-                (new $uses[0])->$uses[1];
-            };
-        }
+        $routerDispatch = $route['action']['uses'];
+        if(! $route['action']['uses'] instanceof \Closure)
+          $routerDispatch = function ($route) {
+            $uses = explode('@',$route['uses']);
+            return (new $uses[0])->$uses[1];
+           };
 
         return \App::getApp()->get('pipeline')->create()->setClass(
-            $middlewares
+            $route['action']['middleware'] ?? []
         )->run($routerDispatch)(
             \App::getApp()->get('request')
         );
