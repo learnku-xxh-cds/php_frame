@@ -23,7 +23,7 @@ class Config
         $config = $this->config;
 
         foreach ($keys as $key)
-          $config = $config[$key];
+            $config = $config[$key];
 
         return $config;
     }

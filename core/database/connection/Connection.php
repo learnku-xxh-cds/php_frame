@@ -3,19 +3,23 @@
 namespace core\database\connection;
 
 use Closure;
-use Illuminate\Database\ConnectionInterface;
 use PDO;
 use PDOStatement;
 
 class Connection implements ConnectionInterface
 {
 
-
-
-    public function raw($value)
+    protected $pdo;
+    protected $tablePrefix;
+    protected $config;
+    public function __construct($pdo, $config)
     {
 
+        $this->pdo = $pdo;
+        $this->tablePrefix = $config['prefix'];
+        $this->config = $config;
     }
+
 
     public function select($query, $bindings = [], $useReadPdo = true)
     {
@@ -42,7 +46,6 @@ class Connection implements ConnectionInterface
         // TODO: Implement statement() method.
     }
 
-
     public function prepareBindings(array $bindings)
     {
         // TODO: Implement prepareBindings() method.
@@ -62,5 +65,4 @@ class Connection implements ConnectionInterface
     {
         // TODO: Implement rollBack() method.
     }
-
 }

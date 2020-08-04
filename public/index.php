@@ -6,6 +6,8 @@
  * 2、加载函数库
  * 3、启动框架
  */
+error_reporting(E_ALL);
+ini_set("display_errors","On");
 
 // 定义常量
 define('FRAME_BASE_PATH', __DIR__ . '/../');
@@ -26,9 +28,9 @@ if (! file_exists( $app_file))
 require_once $composer_auto_load_file;
 require_once $app_file;
 
-App::getApp()->get('response')->setContent(
-    App::getApp()->get('route')->dispatch(
-       App::getApp()->get('request')
+App::get('response')->setContent(
+    App::get('route')->dispatch(
+       App::get('request')
     )
 )->send();
 

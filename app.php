@@ -2,38 +2,31 @@
 
 class App {
 
-    protected $binds = [];
+    protected  static $binds = [];
 
-    private static $instance;
-
-    private function __construct()
+    public function __construct()
     {
         $this->register();
         $this->boot();
     }
 
-    public static function getApp()
+    public static function get($name)
     {
-        return self::$instance ? : self::$instance = new self();
-    }
+        if( isset( self::$binds[$name]['instance']))
+            return self::$binds[$name]['instance'];
 
-    public function get($name)
-    {
-        if( isset($this->binds[$name]['instance']))
-            return $this->binds[$name]['instance'];
-
-        return $this->binds[$name]['instance'] = $this->binds[$name]['concrete']();
+        return self::$binds[$name]['instance'] = (self::$binds[$name]['concrete'])();
     }
 
     public function bind($name,$concrete)
     {
-        $this->binds[$name]['concrete'] = $concrete;
+        self::$binds[$name]['concrete'] = $concrete;
     }
 
     protected function register()
     {
         $this->bind('request', function (){
-           return new \core\Request();
+            return new \core\Request();
         });
         $this->bind('response', function (){
             return new \core\Response();
@@ -47,11 +40,13 @@ class App {
         $this->bind('config', function (){
             return new \core\Config();
         });
+        $this->bind('db', function (){
+            return new \core\database\Database();
+        });
     }
 
     protected function boot()
     {
-
         //web router
         self::get('route')->group([
             'namespace' => 'App\\Controller'
@@ -59,7 +54,6 @@ class App {
             //var_dump($router);exit;
             require_once FRAME_BASE_PATH . 'routes/web.php';
         });
-
 
         //api router
         self::get('route')->group([
@@ -72,3 +66,5 @@ class App {
     }
 
 }
+
+new App();

@@ -1,11 +1,6 @@
 <?php
 
-namespace core\database;
-
-
-namespace Illuminate\Database;
-
-
+namespace core\database\connection;
 interface ConnectionInterface
 {
 

@@ -3,22 +3,35 @@
 namespace core\database\query;
 
 use core\database\connection\Connection;
-use Illuminate\Support\Arr;
 
-class Builder
+class QueryBuilder
 {
 
     protected $connection;
 
     protected $grammar;
 
-    protected $binds;
+    public $binds;
 
-    protected $columns;
+    public $columns;
 
-    protected $distinct;
+    public $distinct;
 
-    protected $form;
+    public $form;
+
+    public $union;
+
+    public $bindings = [
+        'select' => [],
+        'from' => [],
+        'join' => [],
+        'where' => [],
+        'groupBy' => [],
+        'having' => [],
+        'order' => [],
+        'union' => [],
+        'unionOrder' => [],
+    ];
 
     protected $operators = [
         '=','<','>','<=','>=','<>','!=','<=>','like','like binary','not like','ilike','&','|','^',
@@ -26,10 +39,10 @@ class Builder
         'not ilike','~~*','!~~*'
     ];
 
-
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+        $this->grammar = new Grammar();
     }
 
     public function table(string $table,$as = null)
@@ -43,18 +56,12 @@ class Builder
         return $this;
     }
 
-    public function get($columns = [' * '])
+    public function get($columns = null)
     {
-        return collect($this->onceWithColumns(Arr::wrap($columns), function () {
-            return $this->processor->processSelect($this, $this->runSelect());
-        }));
-    }
-
-
-    protected function runSelect()
-    {
+        $this->columns = $columns;
+        $sql = $this->toSql();
         return $this->connection->select(
-            $this->toSql(), $this->getBindings(), ! $this->useWritePdo
+            $sql,$this->getBinds()
         );
     }
 
@@ -62,6 +69,14 @@ class Builder
     {
         return $this->grammar->compileSelect($this);
     }
+
+    public function getBinds()
+    {
+        return $this->binds;
+    }
+
+
+
 
 
 

@@ -106,12 +106,12 @@ Class RouteCollection
           $routerDispatch = function ($route) {
             $uses = explode('@',$route['uses']);
             return (new $uses[0])->$uses[1];
-           };
+          };
 
-        return \App::getApp()->get('pipeline')->create()->setClass(
+        return \App::get('pipeline')->create()->setClass(
             $route['action']['middleware'] ?? []
         )->run($routerDispatch)(
-            \App::getApp()->get('request')
+            \App::get('request')
         );
     }
 

@@ -2,12 +2,32 @@
 
 
 return [
-  'default' => 'mysql',
+  'default' => 'mysql_one',
   'connections' => [
-      'mysql1' => [
-          'url' => '127.0.0.1',
-          'password' => 123456
+      'mysql_one' => [
+          'driver' => 'mysql',
+          'host' => '127.0.0.1',
+          'username' => 'root',
+          'dbname' => 'gch',
+          'password' => '',
+          'prefix' => '',
+          'options' => [
+
+          ]
+      ],
+
+      'mysql_two' => [
+          'drive' => 'mysql',
+          'host' => '127.0.0.1',
+          'username' => 'xxh',
+          'password' => 123456,
+          'prefix' => '',
+          'options' => [
+
+          ]
       ]
+
+
   ],
 
 ];

@@ -22,6 +22,11 @@ $router->group([
 
 // visit /config
 $router->get('config',function (){
-   return App::getApp()->get('config')->get('database.default');
+   return App::get('config')->get('database.default');
 });
 
+
+$router->get('database',function (){
+    return App::get('db')->table('users')->get();
+    //return \App::get('db')->select('select * from users');
+});
