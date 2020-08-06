@@ -39,10 +39,10 @@ class QueryBuilder
         'not ilike','~~*','!~~*'
     ];
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection,Grammar $grammar)
     {
         $this->connection = $connection;
-        $this->grammar = new Grammar();
+        $this->grammar = $grammar;
     }
 
     public function table(string $table,$as = null)
@@ -56,8 +56,12 @@ class QueryBuilder
         return $this;
     }
 
-    public function get($columns = null)
+    public function get($columns = ['*'])
     {
+        if(! is_array($columns))
+            $columns  = func_get_args();
+
+
         $this->columns = $columns;
         $sql = $this->toSql();
         return $this->connection->select(
@@ -65,18 +69,51 @@ class QueryBuilder
         );
     }
 
+    public function where($column, $operator = null, $value = null, $joiner = 'and')
+    {
+        if ( is_array($column))
+            foreach ($column as $col => $value)
+                $this->where($col,'=',$value);
+
+        if(! in_array($operator,$this->operators)){
+            $value = $operator;
+            $operator = '=';
+        }
+
+        $type = 'Basic';
+        $this->wheres[] = compact(
+            'type', 'column', 'operator', 'value', 'joiner'
+        );
+
+        $this->binds[] = $value;
+        return $this;
+    }
+
+    public function orWhere($column, $operator = null, $value = null)
+    {
+
+        return $this->where($column, $operator, $value ,'or');
+    }
+
+    public function find($id,$columns = ['*'],$key = 'id')
+    {
+        return $this->where($key,$id)->get($columns);
+    }
+
+    public function whereLike($column, $operator = null, $value = null)
+    {
+        return $this->where($column, $operator, $value, 'like');
+    }
+
     public function toSql()
     {
-        return $this->grammar->compileSelect($this);
+        return $this->grammar->compileSql($this);
     }
 
     public function getBinds()
     {
         return $this->binds;
     }
-
-
-
 
 
 

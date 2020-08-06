@@ -40,6 +40,7 @@ class Response implements ResponseInterface
 
     public function setContent($content)
     {
+
         if( is_array($content))
             $content = json_encode($content);
 

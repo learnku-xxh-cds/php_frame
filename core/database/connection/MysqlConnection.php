@@ -3,6 +3,7 @@
 
 namespace core\database\connection;
 
+use core\database\query\MysqlGrammar;
 use core\database\query\QueryBuilder;
 
 class MysqlConnection extends Connection
@@ -17,15 +18,13 @@ class MysqlConnection extends Connection
 
     public function select($sql, $bindings = [], $useReadPdo = true)
     {
-
-        $start = microtime(true);
         $statement = $this->pdo;
         $sth = $statement->prepare($sql);
 
         try {
-           $sth->execute();
-           return $sth->fetchAll();
-        } catch (\PDOException $exception){
+           $sth->execute( $bindings);
+           return  $sth->fetchAll();
+         } catch (\PDOException $exception){
             echo ($exception->getMessage());
         }
 
@@ -55,6 +54,8 @@ class MysqlConnection extends Connection
 
     public function __call($method, $parameters)
     {
-        return (clone new QueryBuilder($this))->$method(...$parameters);
+        return (clone new QueryBuilder($this, new MysqlGrammar()))->$method(...$parameters);
     }
+
+
 }
