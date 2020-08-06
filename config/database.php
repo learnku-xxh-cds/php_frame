@@ -3,6 +3,9 @@
 
 return [
   'default' => 'mysql_one',
+
+
+  //phpmyadmin url: http://134.175.80.215:888/phpmyadmin_065286b2cc1e735e/index.php
   'connections' => [
       'mysql_one' => [
           'driver' => 'mysql',
