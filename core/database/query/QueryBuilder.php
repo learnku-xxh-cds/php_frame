@@ -47,8 +47,9 @@ class QueryBuilder
 
     public function table(string $table,$as = null)
     {
-        return (clone $this)->from($table,$as);
-    }
+        return $this->from($table,$as);
+       // return (clone $this)->from($table,$as);
+    }   
 
     public function from($table,$as)
     {

@@ -19,8 +19,6 @@ $router->group([
     });
 });
 
-
-
 // 配置
 $router->get('config',function (){
    return App::get('config')->get('database.default');
@@ -41,5 +39,10 @@ $router->get('database',function (){
 
 // 模型
 $router->get('model',function (){
-  return \App\Models\User::Where('id',1)->orWhere('id',2)->get();
+ $users = \App\Models\User::Where('id',1)->orWhere('id',2)->get();
+ foreach ($users as $user){
+    echo $user->sayPhp()."<br/>";
+ }
 });
+
+

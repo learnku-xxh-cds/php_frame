@@ -3,8 +3,6 @@
 namespace core;
 
 
-use Cassandra\Varint;
-
 Class RouteCollection
 {
 
@@ -19,10 +17,12 @@ Class RouteCollection
     public $currGroup = [];
     public function group($attributes = [],\Closure $callback)
     {
-
         $this->currGroup[] = $attributes;
-        $callback($this);
-//        call_user_func($callback,$this);
+
+        call_user_func($callback,$this);
+        // $callback($this);  跟这个一样的效果
+       // group的实现主要的这个$this  这个$this将当前状态传递到了闭包
+
         array_pop($this->currGroup);
     }
 
@@ -45,20 +45,20 @@ Class RouteCollection
             $prefix .= $group['prefix'] ?? false;
             if( $prefix)
               $this->addSlash($prefix);
-            if( isset($group['middleware'])) // 希望不会被打
+
+            if( isset($group['middleware'])) // $middleware要是个数组
                 if( is_array($group['middleware']))
                     $middleware = $group['middleware'];
                 else
                     $middleware[] = $group['middleware'];
         }
-
-        $method = strtoupper($method);
+        $method = strtoupper($method); // 请求方式
         $uri = $prefix .$uri;
-        $this->route_index = $method . $uri;
+        $this->route_index = $method . $uri; // 路由索引
         $this->routes[$this->route_index] = [
             'method' => $method,
             'uri' => $uri,
-          'action' => [
+            'action' => [
               'uses' => $uses,
               'middleware' => $middleware
           ]
@@ -94,6 +94,7 @@ Class RouteCollection
         return  false;
     }
 
+    // 更具request执行路由
     public function dispatch($request)
     {
 

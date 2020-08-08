@@ -30,9 +30,31 @@ class Builder
             $columns  = func_get_args();
 
         $this->query->columns = $columns;
+        $this->query->table( $this->model->getTable());
         $sql = $this->query->toSql();
-        $res = $this->query->runSql($sql);
-        var_dump($res);exit;
+        return $this->bindModel(
+            $this->query->runSql($sql)
+        );
     }
+
+
+    // 数据映射模式 其实就把 数据映射到模型
+    // 每条数据都是一个模型 !
+    protected function bindModel($datas)
+    {
+        if(! is_array($datas))
+        $datas[] = $datas;
+
+        $models = [];
+        foreach ($datas as $data){
+            $model = clone $this->model; // 原型模式
+            foreach ($data as $key => $val)
+                $model->setOriginalValue($key, $val);
+            $model->syncOriginal();
+            $models[] = $model;
+        }
+        return $models;
+    }
+
 
 }
