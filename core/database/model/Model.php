@@ -50,20 +50,7 @@ class Model
         return  $table .'s';
     }
 
-    // 调用构造器
-    public static function __callStatic($method, $args)
-    {
-        return  (new static())->$method(...$args);
-    }
 
-    public function __call($method, $args)
-    {
-        return (new Builder(
-            $this->connection->newBuilder()
-        ))
-        ->setModel($this)
-        ->$method(...$args);
-    }
 
     public function setOriginalValue($key, $val)
     {
@@ -115,6 +102,25 @@ class Model
     public function __get($name)
     {
         return $this->attribute->$name;
+    }
+
+
+
+    // 托管到 __call
+    //因此: User::where() 与 (new User)->where() 是一样的
+    public static function __callStatic($method, $args)
+    {
+        return  (new static())->$method(...$args);
+    }
+
+
+    public function __call($method, $args)
+    {
+        return (new Builder(
+            $this->connection->newBuilder()
+        ))
+            ->setModel($this)
+            ->$method(...$args);
     }
 
 

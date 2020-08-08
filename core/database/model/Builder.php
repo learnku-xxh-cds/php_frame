@@ -38,19 +38,19 @@ class Builder
     }
 
 
-    // 数据映射模式 其实就把 数据映射到模型
-    // 每条数据都是一个模型 !
+    // 数据映射模式 把数据映射到模型
+    //模型的本质： 每条数据都是一个模型(对象)
     protected function bindModel($datas)
     {
         if(! is_array($datas))
         $datas[] = $datas;
 
         $models = [];
-        foreach ($datas as $data){
+        foreach ($datas as $data){ // 多少条数据就多少个模型
             $model = clone $this->model; // 原型模式
             foreach ($data as $key => $val)
                 $model->setOriginalValue($key, $val);
-            $model->syncOriginal();
+            $model->syncOriginal(); // 把attriubtes = orginal
             $models[] = $model;
         }
         return $models;
