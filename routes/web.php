@@ -46,5 +46,21 @@ $router->get('model',function (){
 $router->get('controller', 'UserController@index');
 
 
-// v 视图
-$router->get('controller', 'UserController@view');
+// blade的模板引擎 默认使用
+$router->get('view/blade', function (){
+    $str = '这是blade模板引擎';
+    return App::get('view')->render('blade.index',compact('str'));
+});
+
+// tp的模板引擎
+$router->get('view/thinkphp', function (){
+    App::get('config')->set('view.engine',\core\view\Thinkphp::class); // 修改配置为tp的
+    App::get('view')->init(); // 重新初始化
+
+    $str = '这是thinkphp模板引擎';
+    return App::get('view')->render('thinkphp.index',compact('str'));
+});
+
+
+
+

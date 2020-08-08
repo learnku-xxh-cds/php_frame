@@ -23,6 +23,11 @@ class App {
 
     protected function register()
     {
+        $this->bind('config', function (){
+            return new \core\Config();
+        });
+
+
         //用闭包原因: 在没调用之前只是字符串 调用才new
         $this->bind('request', function (){
             return new \core\Request();
@@ -36,12 +41,15 @@ class App {
         $this->bind('pipeline', function (){
             return new \core\PipleLine();
         });
-        $this->bind('config', function (){
-            return new \core\Config();
-        });
+
         $this->bind('db', function (){
             return new \core\database\Database();
         });
+
+        $this->bind('view',function (){
+            return new \core\view\View();
+        });
+
     }
 
     protected function boot()
@@ -66,7 +74,9 @@ class App {
         ],function ($router){
             require_once FRAME_BASE_PATH . 'routes/api.php';
         });
+
         self::get('config')->init();
+        self::get('view')->init();
     }
 
 }

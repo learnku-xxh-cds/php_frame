@@ -31,10 +31,23 @@ class Config
 
 
     // 重置配置的值
-    // TODO 待实现
-    public function set($key,$val)
+    public function set($key, $val)
+    {
+        $keys  = explode('.', $key);
+        $count = count($keys);
+        $newconfig = &$this->config;
+        foreach($keys as $key)
+            $newconfig = &$newconfig[$key]; // 传址
+
+        $newconfig = $val;
+    }
+
+
+    protected function update($key,&$val)
     {
 
     }
+
+
 
 }

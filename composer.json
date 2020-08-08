@@ -16,6 +16,8 @@
         ]
     },
     "require": {
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "duncan3dc/blade": "^4.10",
+        "topthink/think-template": "^2.0"
     }
 }
