@@ -14,14 +14,12 @@ class HandleExceptions
     // 异常托管到这个方法
     public function handleException(Throwable $e)
     {
-        if( method_exists($e, 'render')){
 
-        }
         \App::get('response')->setContent(
             $e->render()
         )->send();
-        if( $this->isIgnore($e))
-         return;
+        //if( $this->isIgnore($e))
+        // return;
     }
 
     // 是否忽略异常

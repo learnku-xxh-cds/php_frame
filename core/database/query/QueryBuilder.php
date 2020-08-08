@@ -41,8 +41,8 @@ class QueryBuilder
 
     public function __construct(Connection $connection,Grammar $grammar)
     {
-        $this->connection = $connection;
-        $this->grammar = $grammar;
+        $this->connection = $connection; // 数据库连接
+        $this->grammar = $grammar; // 编译成sql的类
     }
 
     public function table(string $table,$as = null)
@@ -64,7 +64,7 @@ class QueryBuilder
 
         $this->columns = $columns;
         $sql = $this->toSql();
-        $this->runSql($sql);
+        return $this->runSql($sql);
     }
 
     public function runSql($sql)

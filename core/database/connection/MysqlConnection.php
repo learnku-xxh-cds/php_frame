@@ -63,7 +63,7 @@ class MysqlConnection extends Connection
     // 创建新的查询器
     public function newBuilder()
     {
-        return (clone new QueryBuilder($this, new MysqlGrammar()));
+        return  new QueryBuilder($this, new MysqlGrammar());
     }
 
 }
