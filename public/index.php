@@ -6,6 +6,8 @@
  * 2、加载函数库
  * 3、启动框架
  */
+define('FRAME_START_TIME', microtime(true));
+define('FRAME_START_MEMORY',memory_get_usage());
 
 // 开发期间 显示所有错误
 error_reporting(E_ALL);
@@ -35,5 +37,7 @@ App::get('response')->setContent( // 响应
        App::get('request') // 请求
     )
 )->send();
+
+endView(); // 查看运行时间和内存
 
 

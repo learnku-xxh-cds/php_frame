@@ -46,14 +46,22 @@ class App {
             return new \core\database\Database();
         });
 
-        $this->bind('view',function (){
+        $this->bind('view', function (){
             return new \core\view\View();
+        });
+
+        $this->bind('exception', function (){
+            return new \App\exceptions\HandleExceptions();
         });
 
     }
 
     protected function boot()
     {
+        self::get('exception')->init(); // 异常托管
+        self::get('config')->init(); // 配置加载
+        self::get('view')->init(); // 模板引擎初始化
+
         //web router
         self::get('route')->group([
             'namespace' => 'App\\controller',
@@ -75,8 +83,6 @@ class App {
             require_once FRAME_BASE_PATH . 'routes/api.php';
         });
 
-        self::get('config')->init();
-        self::get('view')->init();
     }
 
 }

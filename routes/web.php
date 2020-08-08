@@ -63,4 +63,7 @@ $router->get('view/thinkphp', function (){
 
 
 
+$router->get('exception',function (){
+   throw new \App\exceptions\ErrorMessageException('服务器不想鸟你 并抛出了一个异常');
+});
 
