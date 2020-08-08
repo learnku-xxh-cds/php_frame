@@ -7,7 +7,7 @@ $router->get('/',function (){
 });
 
 $router->group([
-    'prefix' => '/group1'
+    'prefix' => '/group'
 ],function($router){
     $router->get('/',function (){
         return 'api:group1:hello world';
@@ -15,7 +15,5 @@ $router->group([
     $router->get('hello',function (){
         return "hello";
     });
-
-
 
 });

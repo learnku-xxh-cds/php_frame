@@ -4,12 +4,13 @@
 // visit /
 $router->get('/',function (){
     return "web:hello world";
-})->middleware(\core\middleware\IsAuthLoginMIddleware::class);
+})->middleware(\App\Middleware\IsAuthMiddleWare::class);
 
 
 
 $router->group([
-    'prefix' => 'group1'
+    'prefix' => 'group',
+    'middleware' => \App\Middleware\IsAuthMiddleWare::class
 ],function($router){
 
     // visit /group1/
@@ -20,15 +21,17 @@ $router->group([
 
 
 
-// visit /config
+// 配置
 $router->get('config',function (){
    return App::get('config')->get('database.default');
 });
 
-
+// 查询构造器
 $router->get('database',function (){
 
-    return App::get('db')->table('users')->Find(1);
+    // 代理模式大小写可以忽略的
+    return App::get('db')->TABLE('users')->GET();
+
 
     return App::get('db')->table('users')->where('id',54545464646)->ORWHERE('id',4)
         ->Orwhere('id',1)->GET('id','nickname');
@@ -36,7 +39,7 @@ $router->get('database',function (){
     //return \App::get('db')->select('select * from users');
 });
 
-
+// 模型
 $router->get('model',function (){
-//   return \App\Models\User::Where('id',1)->orWhere('id',2)->get();
+  return \App\Models\User::Where('id',1)->orWhere('id',2)->get();
 });

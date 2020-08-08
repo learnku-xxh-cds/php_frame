@@ -7,8 +7,10 @@ use core\database\query\QueryBuilder;
 use PDO;
 use PDOStatement;
 
+// 数据库连接的基础类
 class Connection implements ConnectionInterface
 {
+
 
     protected $pdo;
     protected $tablePrefix;

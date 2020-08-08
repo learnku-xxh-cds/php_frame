@@ -9,10 +9,12 @@ use Psr\Http\Message\UriInterface;
 class Request implements RequestInterface
 {
 
+    // 获取协议版本
     public function getProtocolVersion()
     {
         // TODO: Implement getProtocolVersion() method.
     }
+
 
     public function withProtocolVersion($version)
     {

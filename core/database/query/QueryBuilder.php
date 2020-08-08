@@ -61,9 +61,13 @@ class QueryBuilder
         if(! is_array($columns))
             $columns  = func_get_args();
 
-
         $this->columns = $columns;
         $sql = $this->toSql();
+        $this->runSql($sql);
+    }
+
+    public function runSql($sql)
+    {
         return $this->connection->select(
             $sql,$this->getBinds()
         );

@@ -12,10 +12,8 @@ class App {
 
     public static function get($name)
     {
-        if( isset( self::$binds[$name]['instance']))
-            return self::$binds[$name]['instance'];
-
-        return self::$binds[$name]['instance'] = (self::$binds[$name]['concrete'])();
+        return self::$binds[$name]['instance']
+            ?? self::$binds[$name]['instance'] = (self::$binds[$name]['concrete'])();
     }
 
     public function bind($name,$concrete)
@@ -25,6 +23,7 @@ class App {
 
     protected function register()
     {
+        //用闭包原因: 在没调用之前只是字符串 调用才new
         $this->bind('request', function (){
             return new \core\Request();
         });
@@ -49,16 +48,21 @@ class App {
     {
         //web router
         self::get('route')->group([
-            'namespace' => 'App\\Controller'
+            'namespace' => 'App\\Controller',
+            'middleware' => [
+                \App\middleware\WebMiddleWare::class
+            ]
         ],function ($router){
-            //var_dump($router);exit;
             require_once FRAME_BASE_PATH . 'routes/web.php';
         });
 
         //api router
         self::get('route')->group([
             'namespace' => 'App\\Controller\\Api',
-            'prefix' => 'api'
+            'prefix' => 'api',
+            'middleware' => [
+                \App\middleware\WebMiddleWare::class
+            ]
         ],function ($router){
             require_once FRAME_BASE_PATH . 'routes/api.php';
         });

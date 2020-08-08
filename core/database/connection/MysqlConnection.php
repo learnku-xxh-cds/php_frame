@@ -52,10 +52,18 @@ class MysqlConnection extends Connection
     }
 
 
+    // 调用不存在的方法
     public function __call($method, $parameters)
     {
-        return (clone new QueryBuilder($this, new MysqlGrammar()))->$method(...$parameters);
+        // 返回QueryBuilder类
+        return $this->newBuilder()->$method(...$parameters);
     }
 
+
+    // 创建新的查询器
+    public function newBuilder()
+    {
+        return (clone new QueryBuilder($this, new MysqlGrammar()));
+    }
 
 }

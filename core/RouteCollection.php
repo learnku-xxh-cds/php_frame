@@ -26,12 +26,15 @@ Class RouteCollection
         array_pop($this->currGroup);
     }
 
+
+    // 增加/  如: GETUSER 改成 GET/USER
     protected function addSlash(& $uri)
     {
         return $uri[0] == '/' ? : $uri = '/'.$uri;
     }
 
 
+    // 增加路由
     public function addRoute($method,$uri,$uses)
     {
 
@@ -42,21 +45,22 @@ Class RouteCollection
             $prefix .= $group['prefix'] ?? false;
             if( $prefix)
               $this->addSlash($prefix);
-
-
-            if( isset($group['middleware']))
-              $middleware[] = $group['middleware'];
+            if( isset($group['middleware'])) // 希望不会被打
+                if( is_array($group['middleware']))
+                    $middleware = $group['middleware'];
+                else
+                    $middleware[] = $group['middleware'];
         }
 
         $method = strtoupper($method);
         $uri = $prefix .$uri;
         $this->route_index = $method . $uri;
-
         $this->routes[$this->route_index] = [
-          'method' => $method,
-          'uri' => $uri,
+            'method' => $method,
+            'uri' => $uri,
           'action' => [
-              'uses' => $uses
+              'uses' => $uses,
+              'middleware' => $middleware
           ]
         ];
     }
