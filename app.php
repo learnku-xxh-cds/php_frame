@@ -48,7 +48,7 @@ class App {
     {
         //web router
         self::get('route')->group([
-            'namespace' => 'App\\Controller',
+            'namespace' => 'App\\controller',
             'middleware' => [
                 \App\middleware\WebMiddleWare::class
             ]

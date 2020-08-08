@@ -17,12 +17,12 @@ $router->group([
     });
 });
 
-// TODO 配置设置为完善
+// TODO 配置设置未完善
 $router->get('config',function (){
    return App::get('config')->get('database.default');
 });
 
-// TODO 查询构造器 增删改查 都还完善
+// TODO 查询构造器 增删改查 连表 都还完善
 $router->get('database',function (){
     // 代理模式大小写可以忽略的
     return App::get('db')->TABLE('users')->GET();
@@ -42,6 +42,9 @@ $router->get('model',function (){
 
 
 
+// 完成
+$router->get('controller', 'UserController@index');
 
-// $router->get('controller', 'UserController');
 
+// v 视图
+$router->get('controller', 'UserController@view');

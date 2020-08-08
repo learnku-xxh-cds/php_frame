@@ -40,6 +40,7 @@ Class RouteCollection
 
         $prefix = '';
         $middleware = [];
+        $namespace = '';
         $this->addSlash($uri);
         foreach ($this->currGroup as $group){
             $prefix .= $group['prefix'] ?? false;
@@ -51,6 +52,8 @@ Class RouteCollection
                     $middleware = $group['middleware'];
                 else
                     $middleware[] = $group['middleware'];
+
+            $namespace .= $group['namespace']??'';
         }
         $method = strtoupper($method); // 请求方式
         $uri = $prefix .$uri;
@@ -60,10 +63,13 @@ Class RouteCollection
             'uri' => $uri,
             'action' => [
               'uses' => $uses,
-              'middleware' => $middleware
+              'middleware' => $middleware,
+              'namespace' => $namespace
           ]
         ];
     }
+
+
 
 
     public function get($uri,$uses)
@@ -94,6 +100,7 @@ Class RouteCollection
         return  false;
     }
 
+
     // 更具request执行路由
     public function dispatch($request)
     {
@@ -107,14 +114,22 @@ Class RouteCollection
         return 404;
 
         $routerDispatch = $route['action']['uses'];
-        if(! $route['action']['uses'] instanceof \Closure)
-          $routerDispatch = function ($route) {
-            $uses = explode('@',$route['uses']);
-            return (new $uses[0])->$uses[1];
-          };
+        $middleware = $route['action']['middleware'] ?? [];
+
+        if(! $route['action']['uses'] instanceof \Closure){ // 不是闭包 就是控制器了
+            $action = $route['action'];
+            $uses = explode('@',$action['uses']);
+            $controller = $action['namespace'].'\\'.$uses[0]; // 控制器
+            $method = $uses[1]; // 执行的方法
+            $controllerInstance = new $controller;
+            $middleware = array_merge($middleware,$controllerInstance->getMiddleware()); // 合并控制器中间件
+            $routerDispatch = function ($request) use($route, $controllerInstance, $method){
+                return $controllerInstance->callAction($method,[ $request ]);
+            };
+        }
 
         return \App::get('pipeline')->create()->setClass(
-            $route['action']['middleware'] ?? []
+            $middleware
         )->run($routerDispatch)(
             \App::get('request')
         );
