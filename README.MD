@@ -18,13 +18,39 @@
 |   +---middleware // 用户中间件
 |   \---models // 用户模型
 +---config // 配置文件 参考laraevl
-+---core  // 框架核心 框架底层都在这里
-|   +---database   // 数据库相关的
-|   |   +---connection  // 数据库连接 
-|   |   +---model  // 模型实现
-|   |   \---query   // 编译成sql的实现
-|   \---view  // 视图
+├─core
+│  │  Config.php
+│  │  Controller.php
+│  │  HandleExceptions.php
+│  │  PipleLine.php
+│  │  Request.php
+│  │  Response.php
+│  │  RouteCollection.php
+│  │
+│  ├─database
+│  │  │  Database.php
+│  │  │
+│  │  ├─connection
+│  │  │      Connection.php 
+│  │  │      ConnectionInterface.php
+│  │  │      MysqlConnection.php
+│  │  │      SqlServerConnection.php
+│  │  │
+│  │  ├─model
+│  │  │      Builder.php
+│  │  │      Model.php 
+│  │  │
+│  │  └─query  // sql操作
+│  │          Grammar.php   // 将数据编译成sql基类
+│  │          MysqlGrammar.php // mysql编译成sql
+│  │          QueryBuilder.php // 将数组整合
+│  └─view
+│          Blade.php   // blade的模板引擎
+│          Thinkphp.php  // thinkphp的模板引擎
+│          View.php // 适配器
+│          ViewInterface.php 
 +---public  // 公共文件入口
+│  └─index.php // web端的入口
 +---routes  // 路由文件  web.php和api.php都在这里
 +---storage // 存储 
 +---tests  // 单元测试文件
