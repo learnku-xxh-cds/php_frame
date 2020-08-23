@@ -7,11 +7,10 @@ class View
 
     protected $engin;
 
-
-    public function init()
+    //ViewInterface
+    public function __construct(ViewInterface $engin)
     {
-        $engin = \App::get('config')->get('view.engine');
-        $this->engin = new $engin();
+        $this->engin = $engin;
         $this->engin->init();
     }
 

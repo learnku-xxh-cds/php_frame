@@ -1,8 +1,7 @@
 <?php
 
 return [
-    // 使用那个模板引擎
-    'engine' =>  \core\view\Blade::class,
+
 
     // 模板缓存路径
     'cache_path' => FRAME_BASE_PATH . 'views/cache',

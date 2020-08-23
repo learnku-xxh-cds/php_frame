@@ -2,13 +2,13 @@
 
 function response()
 {
-    return App::getApp('response');
+    return App::getContainer()->getApp('response');
 }
 
 
 function app($name)
 {
-    return App::get($name);
+    return App::getContainer()->get($name);
 }
 
 function endView()

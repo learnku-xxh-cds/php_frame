@@ -11,7 +11,7 @@ class Database
 
     protected function getDefaultConnection()
     {
-        return \App::get('config')->get('database.default');
+        return \App::getContainer()->get('config')->get('database.default');
     }
 
 
@@ -22,7 +22,7 @@ class Database
 
     public function setDefaultConnection($name)
     {
-        \App::get('config')->set('database.default', $name);
+        \App::getContainer()->get('config')->set('database.default', $name);
     }
 
     public function connection($name = null)
@@ -34,7 +34,7 @@ class Database
         if( $name == null)
             $name = $this->getDefaultConnection();
 
-        $config = \App::get('config')->get('database.connections.'.$name);
+        $config = \App::getContainer()->get('config')->get('database.connections.'.$name);
 
         $connectionClass = null; // handle connection class
 

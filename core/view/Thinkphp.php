@@ -12,7 +12,7 @@ class Thinkphp implements ViewInterface
     protected $template;
     public function init()
     {
-        $config = \App::get('config')->get('view');
+        $config = \App::getContainer()->get('config')->get('view');
         $this->template = new Template([
             'view_path' => $config['view_path'],
             'cache_path' => $config['cache_path']

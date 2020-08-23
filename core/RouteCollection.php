@@ -128,10 +128,10 @@ Class RouteCollection
             };
         }
 
-        return \App::get('pipeline')->create()->setClass(
+        return \App::getContainer()->get('pipeline')->create()->setClass(
             $middleware
         )->run($routerDispatch)(
-            \App::get('request')
+            \App::getContainer()->get('request')
         );
     }
 

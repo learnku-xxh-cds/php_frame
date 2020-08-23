@@ -15,7 +15,7 @@ class HandleExceptions
     public function handleException(Throwable $e)
     {
 
-        \App::get('response')->setContent(
+        \App::getContainer()->get('response')->setContent(
             $e->render()
         )->send();
         //if( $this->isIgnore($e))

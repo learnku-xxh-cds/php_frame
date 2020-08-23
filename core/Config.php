@@ -11,7 +11,8 @@ class Config
     // 扫描 config 文件夹,加入到配置的大数组
     public function init()
     {
-        foreach (glob(FRAME_BASE_PATH.'config/*.php') as $file){
+
+        foreach (glob(FRAME_BASE_PATH.'/config/*.php') as $file){
             $key = str_replace('.php','',basename($file));
             $this->config[$key] = require $file;
         }
@@ -34,7 +35,7 @@ class Config
     public function set($key, $val)
     {
         $keys  = explode('.', $key);
-        $count = count($keys);
+
         $newconfig = &$this->config;
         foreach($keys as $key)
             $newconfig = &$newconfig[$key]; // 传址

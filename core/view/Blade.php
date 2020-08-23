@@ -4,13 +4,13 @@ namespace core\view;
 
 use duncan3dc\Laravel\BladeInstance;
 
-class Blade extends View
+class Blade implements ViewInterface
 {
 
     protected $template;
     public function init()
     {
-        $config = \App::get('config')->get('view');
+        $config = \App::getContainer()->get('config')->get('view');
         $this->template = new BladeInstance($config['view_path'], $config['cache_path']);
     }
 

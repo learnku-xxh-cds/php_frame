@@ -28,7 +28,7 @@ class Model
     public function __construct()
     {
         // 给当前模型绑定一个数据库连接
-        $this->connection = \App::get('db')->connection(
+        $this->connection = \App::getContainer()->get('db')->connection(
             $this->connection
         );
     }
