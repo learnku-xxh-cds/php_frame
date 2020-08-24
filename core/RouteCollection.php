@@ -3,6 +3,8 @@
 namespace core;
 
 
+use core\request\RequestInterface;
+
 Class RouteCollection
 {
 
@@ -131,7 +133,7 @@ Class RouteCollection
         return \App::getContainer()->get('pipeline')->create()->setClass(
             $middleware
         )->run($routerDispatch)(
-            \App::getContainer()->get('request')
+            \App::getContainer()->get(RequestInterface::class)
         );
     }
 

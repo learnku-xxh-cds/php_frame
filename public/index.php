@@ -12,7 +12,7 @@ require_once __DIR__ . '/../app.php';   // 框架的文件
 
 App::getContainer()->get('response')->setContent( // 响应
     App::getContainer()->get('route')->dispatch( // 路由
-       App::getContainer()->get('request') // 请求
+       App::getContainer()->get(\core\request\RequestInterface::class) // 请求
     )
 )->send();
 
