@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 版本 编码 声明-->
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/schema/9.3.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <!-- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  声明命名空间 -->
+    <!-- xsi:noNamespaceSchemaLocation: 不用命名空间加载xsd文件  schemal见: https://www.runoob.com/schema/schema-tutorial.html  -->
+    <!-- bootstrap: 测试之前加载的文件 -->
+    <!-- color: 启用颜色  测试失败 成功颜色不同-->
+    <testsuites>
+
+        <testsuite name="php_frame">
+            <!-- name套件名称  就是"组"  可以有多个套件 -->
+
+            <!-- 声明tests文件夹 后缀是Test.php是测试文件 -->
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+
+
+    </testsuites>
+</phpunit>

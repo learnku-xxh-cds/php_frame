@@ -7,6 +7,9 @@ $router->get('/',function (){
     return "web:hello world";
 })->middleware(\App\Middleware\IsAuthMiddleWare::class);
 
+$router->post('/',function (){
+   return 'post';
+});
 
 // 路由组已完善
 $router->group([

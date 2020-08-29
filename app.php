@@ -12,18 +12,6 @@ class App {
     public $binding = [];
     private  static $instance; // app示例
     protected $instances = []; // 所有已经实例化的实例 单例
-    protected  $regisers = [
-        \core\request\RequestInterface::class => \core\request\PhpRequest::class,
-//        \core\request\RequestInterface::class => \core\request\SwooleRequest::class, 切换成swoole的
-
-        'config' => \core\Config::class,
-        'response' => \core\Response::class,
-        'route' => \core\RouteCollection::class,
-        'pipeline' => \core\PipleLine::class,
-        'db' => \core\database\connection\Connection::class,
-        'exception' => \App\exceptions\HandleExceptions::class,
-        \core\view\ViewInterface::class => \core\view\Blade::class
-    ];
 
     public function __construct()
     {
@@ -53,6 +41,7 @@ class App {
     // $is_singleton是否是单例
     public function bind($abstract, $concrete,$is_singleton = false)
     {
+        if(! $concrete instanceof  \Closure)
         $concrete = function ($app) use ($concrete) {
             return $app->build($concrete);
         };
@@ -81,17 +70,35 @@ class App {
 
     protected function register()
     {
-        foreach ($this->regisers as $name => $concrete)
+        $registers = [
+        'config' => \core\Config::class,
+        'response' => \core\Response::class,
+        'route' => \core\RouteCollection::class,
+        'pipeline' => \core\PipleLine::class,
+        'db' => \core\database\connection\Connection::class,
+        'exception' => \App\exceptions\HandleExceptions::class,
+        \core\view\ViewInterface::class => \core\view\Blade::class
+        ];
+
+        foreach ($registers as $name => $concrete)
             $this->bind($name, $concrete, true);
+
+        // 绑定request
+        App::getContainer()->bind(\core\request\RequestInterface::class,function (){
+            return \core\request\PhpRequest::create(
+                $_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD'],$_SERVER
+            );
+        });
     }
 
     protected function boot()
     {
+
+
         $this->get('config')->init(); // 配置加载
         $this->get(\core\view\ViewInterface::class)->init(); // 模板引擎初始化
    //     $this->get('exception')->init(); // 异常托管
-//        var_dump( $_SERVER);exit;
-        $this->get(\core\request\RequestInterface::class)::init();
+
         //web router
         self::get('route')->group([
             'namespace' => 'App\\controller',

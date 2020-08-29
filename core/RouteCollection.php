@@ -72,13 +72,20 @@ Class RouteCollection
     }
 
 
-
-
     public function get($uri,$uses)
     {
         $this->addRoute('get',$uri,$uses);
         return $this;
     }
+
+
+    public function post($uri,$uses)
+    {
+        $this->addRoute('post',$uri,$uses);
+        return $this;
+    }
+
+
 
     public function middleware($class)
     {
