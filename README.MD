@@ -5,7 +5,7 @@
 读者自行完善, 这也可以加深读者的印象。
 
 比如路由, `get` `post`写好了,
-![https://cdn.lblog.club/cdn/files/php_frame_route.png](https://cdn.lblog.club/cdn/files/php_frame_route.png)
+![http://cdn.lblog.club/cdn/files/php_frame_route.png](http://cdn.lblog.club/cdn/files/php_frame_route.png)
 
 `put` `post` `delete` 让读者去完善。
 
