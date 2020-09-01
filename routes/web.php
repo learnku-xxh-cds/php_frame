@@ -50,6 +50,7 @@ $router->get('model',function (){
 $router->get('controller', 'UserController@index');
 
 
+
 // blade的模板引擎 默认使用
 $router->get('view/blade', function (){
     $str = '这是blade模板引擎';
@@ -71,3 +72,10 @@ $router->get('exception',function (){
    throw new \App\exceptions\ErrorMessageException('服务器不想鸟你 并抛出了一个异常');
 });
 
+
+// 完成
+$router->get('log', function (){
+ //   app('log')->info(['user_' => 1],['language' => 'php']);
+  app('log')->info('{language} is the best language in the world',['language' => 'php']);
+    app('log')->channel('file2')->info('{language} is the best language in the world',['language' => 'php']);
+});

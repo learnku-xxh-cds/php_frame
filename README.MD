@@ -8,16 +8,14 @@
 ![http://cdn.lblog.club/cdn/files/php_frame_route.png](http://cdn.lblog.club/cdn/files/php_frame_route.png)
 
 `put` `post` `delete` 让读者去完善。
-
-
 ### 最少代码
-因为`不完善全部代码`, 所以到代码量才少。
+我个人较为讨厌长代码,每个字都需要去理解。
 
+因为 `不完善全部代码` , 所以代码量才少。
 
 如果全部都完善了,那为什么不去看 `开源码框架` 源码?
 
 因为代码量多呗 !
-
 ## 目录结构
 ```
 +---app             // 用户主要都app文件夹编写
