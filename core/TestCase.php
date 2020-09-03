@@ -25,8 +25,9 @@ class TestCase extends BaseTestCase
             return PhpRequest::create($uri,$method);
         });
 
-        return $this->response =  \App::getContainer()->get('response')->setContent( // 响应
-            \App::getContainer()->get('route')->dispatch( // 路由
+
+        return $this->response = app('response')->setContent( // 响应
+            app('route')->dispatch( // 路由
                 \App::getContainer()->get(\core\request\RequestInterface::class) // 调用绑定request
             )
         );

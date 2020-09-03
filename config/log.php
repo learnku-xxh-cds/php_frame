@@ -2,7 +2,6 @@
 
 return [
     'default' => 'file1',
-    'level' =>[],
     'channels' => [
         'file1' => [ // 文件类型的日志
             'driver' => 'stack',

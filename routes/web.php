@@ -68,8 +68,14 @@ $router->get('view/thinkphp', function (){
 
 
 
+
 $router->get('exception',function (){
-   throw new \App\exceptions\ErrorMessageException('服务器不想鸟你 并抛出了一个异常');
+    // 服务器不想鸟你并抛出了异常
+   throw new \App\exceptions\ErrorMessageException('The server did not want to bird you and threw an exception');
+});
+
+$router->get('error',function (){
+    helloworld; // 故意弄错 让它记录到日志
 });
 
 

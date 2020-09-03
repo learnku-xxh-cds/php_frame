@@ -2,6 +2,8 @@
 
 
 // 开发期间 显示所有错误
+use core\request\PhpRequest;
+
 error_reporting(E_ALL);
 ini_set("display_errors","On");
 
@@ -9,9 +11,16 @@ require_once  __DIR__ . '/../vendor/autoload.php'; // 引入自动加载
 require_once __DIR__ . '/../app.php';   // 框架的文件
 
 
-App::getContainer()->get('response')->setContent( // 响应
-    App::getContainer()->get('route')->dispatch( // 路由
-       App::getContainer()->get(\core\request\RequestInterface::class) // 请求
+// 绑定request
+app()->bind(\core\request\RequestInterface::class,function (){
+    return \core\request\PhpRequest::create(
+        $_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD'],$_SERVER
+    );
+});
+
+app('response')->setContent( // 响应
+    app('route')->dispatch( // 路由
+       app(\core\request\RequestInterface::class) // 请求
     )
 )->send();
 

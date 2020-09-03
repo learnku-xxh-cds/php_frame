@@ -23,7 +23,6 @@ class Logger
         if(! $name)
             $name = $this->config['default'];
 
-
         if( isset($this->channels[$name]))
             return $this->channels[$name];
 

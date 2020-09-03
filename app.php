@@ -102,19 +102,14 @@ class App implements Psr\Container\ContainerInterface {
         foreach ($registers as $name => $concrete)
             $this->bind($name, $concrete, true);
 
-        // 绑定request
-        App::getContainer()->bind(\core\request\RequestInterface::class,function (){
-            return \core\request\PhpRequest::create(
-                $_SERVER['REQUEST_URI'],$_SERVER['REQUEST_METHOD'],$_SERVER
-            );
-        });
+
     }
 
     protected function boot()
     {
 
         $this->get(\core\view\ViewInterface::class)->init(); // 模板引擎初始化
-        //     $this->get('exception')->init(); // 异常托管
+        $this->get('exception')->init(); // 异常托管
 
         //web router
         self::get('route')->group([

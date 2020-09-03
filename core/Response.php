@@ -21,7 +21,6 @@ class Response
 
     public function sendHeaders()
     {
-
         foreach ($this->headers as $key => $header)
         header($key.': '.$header);
 
@@ -59,6 +58,12 @@ class Response
     public function getStatusCode()
     {
         return $this->code;
+    }
+
+    public function setCode(int $code)
+    {
+        $this->code = $code;
+        return $this;
     }
 
 }
