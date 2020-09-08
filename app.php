@@ -104,7 +104,6 @@ class App implements Psr\Container\ContainerInterface {
         foreach ($registers as $name => $concrete)
             $this->bind($name, $concrete, true);
 
-
     }
 
     protected function boot()
