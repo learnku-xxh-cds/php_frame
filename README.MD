@@ -26,49 +26,77 @@
 因为代码量多呗 !
 ## 目录结构
 ```
-+---app             // 用户主要都app文件夹编写
-|   +---controller   // 控制器
-|   +---exceptions  // 用户自定义的异常
-|   +---middleware // 用户中间件
-|   \---models // 用户模型
-+---config // 配置文件 参考laraevl
-├─core
-│  │  Config.php
-│  │  Controller.php
-│  │  HandleExceptions.php
-│  │  PipleLine.php
-│  │  Request.php
-│  │  Response.php
-│  │  RouteCollection.php
-│  │
-│  ├─database
-│  │  │  Database.php
-│  │  │
-│  │  ├─connection
-│  │  │      Connection.php 
-│  │  │      ConnectionInterface.php
-│  │  │      MysqlConnection.php
-│  │  │      SqlServerConnection.php
-│  │  │
-│  │  ├─model
-│  │  │      Builder.php
-│  │  │      Model.php 
-│  │  │
-│  │  └─query  // sql操作
-│  │          Grammar.php   // 将数据编译成sql基类
-│  │          MysqlGrammar.php // mysql编译成sql
-│  │          QueryBuilder.php // 将数组整合
-│  └─view
-│          Blade.php   // blade的模板引擎
-│          Thinkphp.php  // thinkphp的模板引擎
-│          View.php // 适配器
-│          ViewInterface.php 
-+---public  // 公共文件入口
-│  └─index.php // web端的入口
-+---routes  // 路由文件  web.php和api.php都在这里
-+---storage // 存储 
-+---tests  // 单元测试文件
++---app
+|   |   helpers.php // 函数
+|   +---controller
+|   |       UserController.php // 示例控制器
+|   +---exceptions
+|   |       ErrorMessageException.php // 错误消息返回
+|   |       HandleExceptions.php // 基础core/HandleExceptions
+|   +---middleware
+|   |       ApiMiddleWare.php
+|   |       ControllerMiddleWare.php
+|   |       IsAuthMiddleWare.php 
+|   |       WebMiddleWare.php // web.php加载的中间件
+|   \---models
+|           User.php // 示例模型
++---config
+|       database.php // 数据库配置
+|       log.php // 日志配置
+|       view.php // 视图配置
++---core
+|   |   Config.php  // 配置
+|   |   Controller.php      // 基础控制器
+|   |   HandleExceptions.php    // 异常&错误 托管处理
+|   |   PipleLine.php   // 管道
+|   |   Response.php    // 响应
+|   |   RouteCollection.php // 路由
+|   |   SwooleContext.php // 协程上下文管理
+|   |   TestCase.php // 基础测试文件
+|   +---database
+|   |   |   Database.php 
+|   |   +---connection
+|   |   |       Connection.php
+|   |   |       ConnectionInterface.php
+|   |   |       MysqlConnection.php // mysql链接
+|   |   |       SqlServerConnection.php 
+|   |   +---model
+|   |   |       Builder.php // 模型构造器
+|   |   |       Model.php // 基础模型
+|   |   \---query
+|   |           Grammar.php
+|   |           MysqlGrammar.php // 编译成sql语句
+|   |           QueryBuilder.php // 查询构造器
+|   +---log
+|   |   |   Logger.php // 日志管理
+|   |   \---driver // 不同类型日志实现
+|   |           DailyLogger.php
+|   |           StackLogger.php
+|   |
+|   +---request
+|   |       PhpRequest.php  // 请求
+|   |       RequestInterface.php 
+|   \---view
+|           Blade.php       // laravel模板引擎
+|           Thinkphp.php    // tp模板引擎
+|           View.php    // 视图适配器
+|           ViewInterface.php 
++---public
+|       index.php // 单一入口文件
++---routes
+|       api.php 
+|       web.php // 大部分功能可以在这里运行
++---storage
+|       daily.log       // 框架日志 按日期类型 
+|       php_frame.log // 框架日志 
+|       swoole.pid // swoole的进程id
++---tests
+|       ExampleTest.php // 测试示例文件
++---phpunit.xml // phpunit的配置
++---app.php     // 框架要经过这个加载
++---swoole.php     // swoole的http服务器
 ```
+
 
 
 ## 文章目录
