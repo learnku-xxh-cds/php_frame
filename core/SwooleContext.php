@@ -12,7 +12,7 @@ class SwooleContext
 
     static function get($key)
     {
-        $cid = Coroutine::getuid(); // 当前协程id
+        $cid = Coroutine::getuid();
         if ($cid < 0)
         {
             return null;
@@ -45,4 +45,5 @@ class SwooleContext
             }
         }
     }
+
 }

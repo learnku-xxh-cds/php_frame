@@ -2,32 +2,11 @@
 
 namespace core\request;
 
-
-class SwooleRequest implements RequestInterface
+class SwooleRequest extends PhpRequest
 {
 
-    public static function init()
-    {
-        // TODO: Implement init() method.
-    }
 
-    public static function create()
-    {
-        // TODO: Implement create() method.
-    }
 
-    public function getUri()
-    {
-        // TODO: Implement getUri() method.
-    }
 
-    public function getMethod()
-    {
-        // TODO: Implement getMethod() method.
-    }
 
-    public function getHeader()
-    {
-        // TODO: Implement getHeader() method.
-    }
 }

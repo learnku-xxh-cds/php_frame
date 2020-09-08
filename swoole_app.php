@@ -27,7 +27,7 @@ class App implements Psr\Container\ContainerInterface {
     {
 
         if( isset($this->instances[$abstract])) // 此服务已经实例化过了
-        return $this->instances[$abstract];
+            return $this->instances[$abstract];
 
         $instance = $this->binding[$abstract]['concrete']($this); // 因为服务是闭包 加()就可以执行了
         if( $this->binding[$abstract]['is_singleton']) // 设置为单例
@@ -96,6 +96,7 @@ class App implements Psr\Container\ContainerInterface {
             'route' => \core\RouteCollection::class,
             'pipeline' => \core\PipleLine::class,
             'db' => \core\database\Database::class,
+            //'db' => \core\database\connection\Connection::class,
             'exception' => \App\exceptions\HandleExceptions::class,
             \core\view\ViewInterface::class => \core\view\Blade::class,
             'log'   => \core\log\Logger::class

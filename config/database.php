@@ -20,10 +20,22 @@ return [
       ],
 
       'mysql_two' => [
-          'drive' => 'mysql',
+          'driver' => 'mysql',
+          'host' => '134.175.80.215',
+          'username' => 'php_frame',
+          'dbname' => 'php_frame',
+          'password' => '12345678',
+          'prefix' => '',
+          'options' => [
+
+          ]
+      ],
+      'local' => [
+          'driver' => 'mysql',
           'host' => '127.0.0.1',
-          'username' => 'xxh',
-          'password' => 123456,
+          'username' => 'root',
+          'dbname' => 'php_frame',
+          'password' => '12345678',
           'prefix' => '',
           'options' => [
 

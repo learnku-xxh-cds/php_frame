@@ -5,7 +5,7 @@
 $router->get('/',function (){
     return 1;
     return "web:hello world";
-})->middleware(\App\Middleware\IsAuthMiddleWare::class);
+})->middleware(\App\middleware\IsAuthMiddleWare::class);
 
 $router->post('/',function (){
    return 'post';
@@ -14,7 +14,7 @@ $router->post('/',function (){
 // 路由组已完善
 $router->group([
     'prefix' => 'group',
-    'middleware' => \App\Middleware\IsAuthMiddleWare::class
+    'middleware' => \App\middleware\IsAuthMiddleWare::class
 ],function($router){
     $router->get('/',function (){
         return 'web:group1:hello world';

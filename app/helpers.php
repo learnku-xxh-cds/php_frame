@@ -30,7 +30,30 @@ function endView()
 }
 
 
-function config($key)
+function config($key = null)
 {
+    if( $key)
     return App::getContainer()->get('config')->get($key) ;
+    return App::getContainer()->get('config');
+}
+
+
+if (! function_exists('tap')) {
+    /**
+     * Call the given Closure with the given value then return the value.
+     *
+     * @param  mixed  $value
+     * @param  callable|null  $callback
+     * @return mixed
+     */
+    function tap($value, $callback = null)
+    {
+        if (is_null($callback)) {
+            return new HigherOrderTapProxy($value);
+        }
+
+        $callback($value);
+
+        return $value;
+    }
 }
