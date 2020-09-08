@@ -133,14 +133,15 @@ Class RouteCollection
             $controllerInstance = new $controller;
             $middleware = array_merge($middleware,$controllerInstance->getMiddleware()); // 合并控制器中间件
             $routerDispatch = function ($request) use($route, $controllerInstance, $method){
+
                 return $controllerInstance->callAction($method,[ $request ]);
             };
         }
 
-        return \App::getContainer()->get('pipeline')->create()->setClass(
+        return app('pipeline')->create()->setClass(
             $middleware
         )->run($routerDispatch)(
-            \App::getContainer()->get(RequestInterface::class)
+            app(RequestInterface::class)
         );
     }
 

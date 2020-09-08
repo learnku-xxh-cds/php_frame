@@ -88,6 +88,7 @@ class App implements Psr\Container\ContainerInterface {
     {
         // 先注册配置 后续服务可能会依赖配置
         $this->bind('config',\core\Config::class,true);
+
         $this->get('config')->init(); // 配置加载
 
 
@@ -104,12 +105,16 @@ class App implements Psr\Container\ContainerInterface {
         foreach ($registers as $name => $concrete)
             $this->bind($name, $concrete, true);
 
+
     }
 
     protected function boot()
     {
 
-        $this->get(\core\view\ViewInterface::class)->init(); // 模板引擎初始化
+        $this->get(\core\view\ViewInterface::class)->init();
+        // 模板引擎初始化 在swoole中模板引擎要做处理 所以在swoole需要注释这段
+
+
         $this->get('exception')->init(); // 异常托管
 
         //web router

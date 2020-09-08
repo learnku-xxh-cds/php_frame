@@ -4,6 +4,8 @@
 // 开发期间 显示所有错误
 use core\request\PhpRequest;
 
+date_default_timezone_set("Asia/Shanghai");
+
 error_reporting(E_ALL);
 ini_set("display_errors","On");
 

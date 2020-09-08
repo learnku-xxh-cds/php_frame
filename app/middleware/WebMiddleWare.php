@@ -3,7 +3,6 @@
 namespace App\middleware;
 
 
-use core\Request;
 
 class WebMiddleWare
 {

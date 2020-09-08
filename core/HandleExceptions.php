@@ -47,10 +47,15 @@ class HandleExceptions
         )->send();
 
 
+
+
         if(! $this->isIgnore($e)){ // 不忽略 记录异常到日志去
             app('log')->debug(
                 $e->getMessage().' at '.$e->getFile().':'.$e->getLine()
             );
+
+            // 显示给开发者看 以便查找错误
+            echo $e->getMessage().' at '.$e->getFile().':'.$e->getLine();
         }
     }
 
