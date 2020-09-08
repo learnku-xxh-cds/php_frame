@@ -32,7 +32,7 @@
 |   |       UserController.php // 示例控制器
 |   +---exceptions
 |   |       ErrorMessageException.php // 错误消息返回
-|   |       HandleExceptions.php // 基础core/HandleExceptions
+|   |       HandleExceptions.php // 继承core/HandleExceptions
 |   +---middleware
 |   |       ApiMiddleWare.php
 |   |       ControllerMiddleWare.php
@@ -89,7 +89,7 @@
 +---storage
 |       daily.log       // 框架日志 按日期类型 
 |       php_frame.log // 框架日志 
-|       swoole.pid // swoole的进程id
+|       swoole.pid // swoole的进程pid
 +---tests
 |       ExampleTest.php // 测试示例文件
 +---phpunit.xml // phpunit的配置

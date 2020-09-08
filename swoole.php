@@ -40,10 +40,11 @@ $start = function()
             app('response')->setContent( // 响应
                 app('route')->dispatch( // 路由
                     app(\core\request\RequestInterface::class) // 请求
+                    // 其实是调用\core\SwooleContext::get('request')
                 )
             )->getContent()
         );
-        \core\SwooleContext::delete();
+        \core\SwooleContext::delete(); // 释放内存
     });
 
     $http->start();

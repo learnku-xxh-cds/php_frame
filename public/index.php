@@ -2,12 +2,11 @@
 
 
 // 开发期间 显示所有错误
-use core\request\PhpRequest;
+error_reporting(E_ALL);
+ini_set("display_errors","On");
 
 date_default_timezone_set("Asia/Shanghai");
 
-error_reporting(E_ALL);
-ini_set("display_errors","On");
 
 require_once  __DIR__ . '/../vendor/autoload.php'; // 引入自动加载
 require_once __DIR__ . '/../app.php';   // 框架的文件
